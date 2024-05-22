@@ -40,7 +40,7 @@ partnerRouter
   })
 
   .post((req,  res) => {
-    req.statusCode = 403;
+    res.statusCode = 403;
     res.end('POST not supported')
   })
 
