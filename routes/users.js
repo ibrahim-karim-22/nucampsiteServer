@@ -35,11 +35,10 @@ router.post("/signup", (req, res) => {
             res.json({ err: err });
             return;
           }
-          passport.authenticate("local")(req, res, () => {
-            const token = authenticate.getToken({ _id: user._id }); 
+          passport.authenticate("local")(req, res, () => { 
             res.statusCode = 200;
             res.setHeader("Content-Type", "application/json");
-            res.json({ success: true, token: token, status: "Registration Successful!" });
+            res.json({ success: true, status: "Registration Successful!" });
           });
         });
       }
