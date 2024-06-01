@@ -5,6 +5,7 @@ var logger = require("morgan");
 
 const passport = require("passport");
 const config = require("./config");
+const session = require("express-session");
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -15,7 +16,7 @@ const partnerRouter = require("./routes/partnerRouter");
 const mongoose = require("mongoose");
 
 const url = config.mongoUrl;
-const connect = mongoose.connect(url, {});
+const connect = mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true });
 
 connect.then(
   () => console.log("Connected correctly to server"),
@@ -33,6 +34,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 // app.use(cookieParser('12345-6789-1234-5678')); //using express session instead of cookie parser
 
+app.use(session({
+  secret: config.secretKey,
+  resave: false,
+  saveUninitialized: false,
+ cookie: {maxAge: 1000} 
+}))
 
 app.use(passport.initialize());
 
