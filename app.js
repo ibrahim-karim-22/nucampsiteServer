@@ -17,6 +17,7 @@ const uploadRouter = require('./routes/uploadRouter');
 const mongoose = require("mongoose");
 
 const url = config.mongoUrl;
+mongoose.set('strictQuery', false);
 const connect = mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true });
 
 connect.then(
@@ -75,6 +76,7 @@ app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.title = "Campsite Server";
 
   // render the error page
   res.status(err.status || 500);
@@ -82,3 +84,4 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+
